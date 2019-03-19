@@ -124,3 +124,11 @@ if (login === null){
 let result;
 result = a + b < 4 ? 'Malo' : 'Mnogo';
 */
+
+/////// LESSONS 6 /////////
+
+// ex1 - cmotri vidos.
+
+// Calcuklator
+
+
