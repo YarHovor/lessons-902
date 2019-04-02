@@ -3,39 +3,36 @@
 // $_GET - Данные GET-запроса
 // $_POST - Данные POST-запроса
 
-$errors=[];
+$errors = [];
 
-if (empty($_POST['email'])){
-    $errors['email'] = 'Vvedite email';
-}else{
+if (empty($_POST['email'])) {
+	$errors['email'] = 'Введите email';
+} else {
+	$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 
-    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-
-    if ($email === false) {
-        $errors['email'] = 'Error email';
-    }
-
+	if ($email === false) {
+		$errors['email'] = 'Неверный email';
+	}
 }
 
-if (empty($_POST['password'])){
-    $errors['password'] = 'Vvedite password';
+if (empty($_POST['password'])) {
+	$errors['password'] = 'Введите пароль';
 }
 
-if (empty($_POST['passwordConfirmation'])){
-    $errors['passwordConfirmation'] = 'Vvedite passwordConfirmation';
-}elseif ($_POST['password'] != $_POST['passwordConfirmation']){
-    $errors['passwordConfirmation'] = 'password and passwordConfirmation no sovpadenie';
+if (empty($_POST['passwordConfirmation'])) {
+	$errors['passwordConfirmation'] = 'Введите подтверждение пароля';
+} elseif ($_POST['password'] != $_POST['passwordConfirmation']) {
+	$errors['passwordConfirmation'] = 'Пароль и подтверждение не совпадают';
 }
 
 if ($errors) {
-    include 'form.php';
-    exit();
+	include 'index.php';
+	exit();
 }
-//создали файл и в этот файл передаем парметры
+
 $file = fopen('users.txt', 'a');
-$line =$_POST['email'] . "\t" . $_POST['password'] . "\n";
+$line = $_POST['email'] . "\t" . $_POST['password'] . "\n";
 fputs($file, $line);
 fclose($file);
 
-//Говорим пользователю "Спасибо за регистрацию"
-header('Location: sps.html');
+header('Location: thanks.html');

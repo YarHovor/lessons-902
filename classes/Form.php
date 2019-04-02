@@ -1,41 +1,49 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: skillup_student
- * Date: 22.03.19
- * Time: 20:25
- */
 
 class Form
 {
-    /**
-     * @var array
-     */
-    private $fields;
 
-    /**
-     * @var string
-     */
-    private $method;
+	/**
+	 * Fields of form
+	 *
+	 * @var FormField[]
+	 */
+	private $fields;
 
-    /**
-     * @var string
-     */
-    private $action;
+	/**
+	 * @var string
+	 */
+	private $method;
 
-    public function __construct(string $method, string $action)
-    {
-        $this->method = $method;
-        $this->action = $action;
-        $this->fields = [];
-    }
+	/**
+	 * @var string
+	 */
+	private $action;
 
-    public function render()
-    {
-        $html = sprintf('<form method="%s" action="%s">', $this->method,$this->action);
-        $html .= '</form>';
+	public function __construct(string $method, string $action)
+	{
+		$this->method = $method;
+		$this->action = $action;
+		$this->fields = [];
+	}
 
-        return $html;
+	public function render()
+	{
+		$html = sprintf('<form method="%s" action="%s">', $this->method, $this->action);
+		// $html = '<form method="' . $this->method . '" action="' . $this->action . '">';
 
-    }
+		foreach ($this->fields as $field) {
+			$html .= $field->render();
+		}
+
+		$html .= '</form>';
+
+		return $html;
+	}
+
+	public function addField(FormField $field)
+	{
+		$this->fields[$field->getName()] = $field;
+	}
+
 }
