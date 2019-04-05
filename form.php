@@ -9,13 +9,22 @@ spl_autoload_register(function ($name) {
 	require __DIR__ . '/classes/' . $name . '.php';
 });
 
-$form = new Form('post', 'action.php');
+Registry::getInstance()->setFormElementClass('form-control');
+
+$form = new Form('post', 'form.php');
 $email = new InputFormField('email', 'Email');
+$email->addValidator(new \Form\Validators\EmptyValidator());
+$email->addValidator(new EmailValidator());
 $form->addField($email);
-$form->addField(new InputFormField('firstName', 'Имя'));
+
+$firstName = new InputFormField('firstName', 'Имя');
+$firstName->addValidator(new EmptyValidator());
+$form->addField($firstName);
+
 $form->addField(new PasswordFormField('password', 'Пароль'));
 $form->addField(new PasswordFormField('passwordConfirmation', 'Подтверждение пароля'));
 $form->addField(new FormButton('Зарегистрироваться'));
+$form->processRequest();
 
 ?>
 <!DOCTYPE html>

@@ -46,4 +46,24 @@ class Form
 		$this->fields[$field->getName()] = $field;
 	}
 
+	public function processRequest(): bool
+	{
+		$values = $this->method == 'post' ? $_POST : $_GET;
+		$hasErrors = false;
+
+		foreach ($this->fields as $name => $field) {
+			if (isset($values[$name])) {
+				$field->setValue($values[$name]);
+			}
+
+			if ($field instanceof ValidatedFieldInterface) {
+				if ($field->validate() === false) {
+					$hasErrors = true;
+				};
+			}
+		}
+
+		return $hasErrors;
+	}
+
 }
