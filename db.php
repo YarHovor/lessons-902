@@ -26,22 +26,22 @@ var_dump($db->errorInfo());
 </head>
 
 <body>
-    <table>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Фамилия</th>
+        <th>Email</th>
+    </tr>
+    <?php foreach ($result as $row):?>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Фамилия</th>
-            <th>Email</th>
+            <td><?= $row['id']?></td>
+            <td><?= $row['first_name']?></td>
+            <td><?= $row['last_name']?></td>
+            <td><?= $row['email']?></td>
         </tr>
-        <?php foreach ($result as $row):?>
-            <tr>
-                <td><?= $row['id']?></td>
-                <td><?= $row['first_name']?></td>
-                <td><?= $row['last_name']?></td>
-                <td><?= $row['email']?></td>
-            </tr>
-        <?php endforeach ?>
-    </table>
+    <?php endforeach ?>
+</table>
 </body>
 
 </html>
